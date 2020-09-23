@@ -8,6 +8,43 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBox x:Name="URLTextBox"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Top"
+                 Height="50"
+                 FontSize="16"/>
 
+        <WebView x:Name="Browser"
+                 DefaultBackgroundColor="Black"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Top"
+                 Height="256"
+                 Margin="0,54,0,0"
+                 NavigationCompleted="Browser_NavigationCompleted"/>
+
+        <ScrollViewer x:Name="ScrollViewer"
+                      Margin="0,331,0,0"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Top"
+                      Height="256"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled">
+            <TextBox x:Name="FeedbackTextBox"
+                     Background="Black"
+                     Foreground="Green"
+                     BorderBrush="DarkSlateGray"
+                     TextWrapping="NoWrap"
+                     AcceptsReturn="True"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     BorderThickness="1"
+                     FontSize="16"/>
+        </ScrollViewer>
+
+        <Button x:Name="ConvertButton"
+                Content="Convert"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Click="ConvertButton_Click"/>
     </Grid>
 </Page>

@@ -26,5 +26,15 @@ namespace YTDownloader
         {
             this.InitializeComponent();
         }
+
+        private void ConvertButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Browser_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+
+        }
     }
 }
