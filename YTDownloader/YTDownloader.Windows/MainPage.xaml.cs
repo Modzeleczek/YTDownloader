@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Net;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -60,7 +62,23 @@ namespace YTDownloader
             return id;
         }
 
-        private void ConvertButton_Click(object sender, RoutedEventArgs e)
+        private async Task<string> DownloadSourceAsync(string URL)
+        {
+            // create a new HTTP web request
+            var http = (HttpWebRequest)WebRequest.Create(URL);
+            // download webpage's response and save a reference to it
+            var response = await http.GetResponseAsync();            
+            // save a reference to the data stream associated with the response
+            using (var stream = response.GetResponseStream())
+            {
+                // create a stream reader on response's stream
+                var sr = new StreamReader(stream);
+                // read all response's bytes as string
+                return sr.ReadToEnd();
+            }
+        }
+
+        private async void ConvertButton_Click(object sender, RoutedEventArgs e)
         {
             string id = ExtractVideoID(URLTextBox.Text);
             // if ID was not extracted, print an error message and stop this method
@@ -69,21 +87,39 @@ namespace YTDownloader
                 FeedbackTextBox.Text = "Invalid YouTube URL.\r\n";
                 return;
             }
-            // generate download buttons in WebView by navigating to API URI (https://github.com/matthew-asuncion/Fast-YouTube-to-MP3-Converter-API)
-            Browser.Navigate(new Uri("https://www.yt-download.org/api/button/mp3/" + id));
+            // download source of the webpage generated for specified video by the API
+            // https://github.com/matthew-asuncion/Fast-YouTube-to-MP3-Converter-API
+            string source = await DownloadSourceAsync("https://www.yt-download.org/api/button/mp3/" + id);
             // https://www.yt-download.org/api/button/videos/
+
+            var indexes = source.AllIndexesOf("https://www.yt-download.org/download/");
+            FeedbackTextBox.Text = "";
+            //string[] downloadURLs = new string[indexes.Count];
+            for(int i = 0; i < indexes.Count; ++i)
+            {
+                //downloadURLs[i] = "";
+                int index = indexes[i];
+                while (source[index] != '"')
+                    FeedbackTextBox.Text += source[index++];
+                FeedbackTextBox.Text += "\r\n";
+            }
         }
+    }
 
-        private async void Browser_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+    public static class StringExtension
+    {
+        public static List<int> AllIndexesOf(this string str, string value)
         {
-            if (args.IsSuccess)
-                // print a success message
-                FeedbackTextBox.Text = "Navigation successful.\r\n";
-            else
-                // print an error message
-                FeedbackTextBox.Text = $"Navigation failed.\r\n{args.Uri}\r\n{args.WebErrorStatus}\r\n";
-
-            FeedbackTextBox.Text += await Browser.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" }) + "\r\n";
+            if (String.IsNullOrEmpty(value))
+                throw new ArgumentException("the string to find may not be empty", "value");
+            List<int> indexes = new List<int>();
+            for (int index = 0; ; index += value.Length)
+            {
+                index = str.IndexOf(value, index);
+                if (index == -1)
+                    return indexes;
+                indexes.Add(index);
+            }
         }
     }
 }
