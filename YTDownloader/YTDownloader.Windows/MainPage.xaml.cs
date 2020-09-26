@@ -51,6 +51,9 @@ namespace YTDownloader
         }
     }
 
+    /// <summary>
+    /// Represents a YouTube sound downloader.
+    /// </summary>
     public class Downloader
     {
         /// <summary>
@@ -137,6 +140,9 @@ namespace YTDownloader
         }
     }
 
+    /// <summary>
+    /// Represents an MP3 file before it is downloaded.
+    /// </summary>
     public class MP3
     {
         public string URL { get; }
@@ -188,6 +194,9 @@ namespace YTDownloader
         }
     }
 
+    /// <summary>
+    /// Contains custom exception classes used by the program.
+    /// </summary>
     namespace Exceptions
     {
         public class UnknownNameException : Exception
@@ -207,6 +216,9 @@ namespace YTDownloader
         }
     }
 
+    /// <summary>
+    /// Constains extension methods of String class.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>
