@@ -207,8 +207,14 @@ namespace YTDownloader
         }
     }
 
-    public static class StringExtension
+    public static class StringExtensions
     {
+        /// <summary>
+        /// Returns a list containing indexes of all beginnings of the specified string.
+        /// </summary>
+        /// <param name="str">String, where to search.</param>
+        /// <param name="value">String, whose occurrences' positions should be returned.</param>
+        /// <returns>List containing indexes of all beginnings of the specified string.</returns>
         public static List<int> AllIndexesOf(this string str, string value)
         {
             if (String.IsNullOrEmpty(value))
