@@ -12,17 +12,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Net;
-using System.Threading.Tasks;
 using Windows.Storage;
 using YTDownloader.Exceptions;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace YTDownloader
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Main and only program's page.
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -31,6 +27,7 @@ namespace YTDownloader
         {
             this.InitializeComponent();
         }
+
         private async void ConvertButton_Click(object sender, RoutedEventArgs e)
         {
             try
