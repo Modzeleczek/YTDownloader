@@ -11,14 +11,20 @@
         <TextBox x:Name="URLTextBox"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Top"
-                 Height="50"
+                 Height="30"
                  FontSize="16"/>
 
+        <ListBox x:Name="BitratesListBox"
+                 Margin="0,30,0,0"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Top"
+                 Height="200"/>
+
         <ScrollViewer x:Name="ScrollViewer"
-                      Margin="0,331,0,0"
+                      Margin="0,200,0,0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
-                      Height="256"
+                      Height="350"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Disabled">
             <TextBox x:Name="FeedbackTextBox"
@@ -33,10 +39,17 @@
                      FontSize="16"/>
         </ScrollViewer>
 
+        <Button x:Name="DownloadButton"
+                Content="Download"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Visibility="Collapsed"
+                Click="DownloadButton_Click"/>
+
         <Button x:Name="ConvertButton"
                 Content="Convert"
-                VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
                 Click="ConvertButton_Click"/>
     </Grid>
 </Page>

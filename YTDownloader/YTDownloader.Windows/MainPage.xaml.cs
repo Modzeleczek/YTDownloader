@@ -35,19 +35,35 @@ namespace YTDownloader
         {
             try
             {
+                if (BitratesListBox.Items.Count != 0)
+                    BitratesListBox.Items.Clear();
+
                 var mp3s = await DownloaderInstance.GetMP3sAsync(URLTextBox.Text);
+
                 FeedbackTextBox.Text = "";
                 foreach (var mp3 in mp3s)
+                {
                     FeedbackTextBox.Text += $"{mp3}\r\n";
-                
-                // TODO: users can choose, which bitrate they want to download
+                    BitratesListBox.Items.Add(mp3);
+                }
+                BitratesListBox.SelectedIndex = 0;
+                DownloadButton.Visibility = Visibility.Visible;
             }
             catch (Exception ex) when (
             ex is DownloaderAPIException ||
             ex is ArgumentException ||
             ex is UnknownNameException ||
             ex is IOException)
-            { FeedbackTextBox.Text += ex.ToString(); }
+            {
+                FeedbackTextBox.Text += ex.ToString();
+                DownloadButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            (BitratesListBox.SelectedItem as MP3).DownloadAsync(KnownFolders.MusicLibrary);
+            FeedbackTextBox.Text += "MP3 downloaded.";
         }
     }
 
@@ -154,7 +170,7 @@ namespace YTDownloader
             Bitrate = bitrate;
         }
 
-        public override string ToString() => $"URL: {URL}; bitrate: {Bitrate}";
+        public override string ToString() => Bitrate.ToString();
 
         /// <summary>
         /// Downloads and saves the MP3 in specified folder.
@@ -177,7 +193,7 @@ namespace YTDownloader
             if (substrings.Count == 0)
                 throw new UnknownNameException("No MP3 file's name was found in response's " +
                     $"'Content-Disposition' header: '{header}'.");
-            var fileName = substrings.FirstOrDefault();
+            var fileName = substrings.FirstOrDefault().Substring("filename=\"".Length);
 
             // build the file from bytes copied from the response
             using (var responseStream = response.GetResponseStream())
