@@ -13,6 +13,9 @@ namespace YTDownloader
     /// </summary>
     public class MP3
     {
+        public static char[] ForbiddenWindowsCharacters = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+        public static char[] ReplacementCharacters =      { 'l', 'g', 'c', 'd', 's', 'b',  'p', 'q', 'a' };
+
         public string URL { get; }
         public int Bitrate { get; }
 
@@ -46,6 +49,9 @@ namespace YTDownloader
                 throw new UnknownNameException("No MP3 file's name was found in response's " +
                     $"'Content-Disposition' header: '{header}'.");
             var fileName = substrings.FirstOrDefault().Substring("filename=\"".Length);
+
+            for (int i = 0;  i < ForbiddenWindowsCharacters.Length; ++i)
+                fileName = fileName.Replace(ForbiddenWindowsCharacters[i], ReplacementCharacters[i]);
 
             // build the file from bytes copied from the response
             using (var responseStream = response.GetResponseStream())
