@@ -9,43 +9,50 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBox x:Name="URLTextBox"
-                 HorizontalAlignment="Stretch"
-                 VerticalAlignment="Top"
-                 Height="30"
-                 FontSize="16"/>
-
-        <ListBox x:Name="BitratesListBox"
-                 Margin="0,48,0,0"
-                 HorizontalAlignment="Stretch"
-                 VerticalAlignment="Top"
-                 Height="200"/>
-
-        <ScrollViewer x:Name="ScrollViewer"
-                      Margin="0,272,0,0"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Top"
-                      Height="300"
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Disabled">
-            <TextBox x:Name="FeedbackTextBox"
-                     Background="Black"
-                     Foreground="Green"
-                     BorderBrush="DarkSlateGray"
-                     TextWrapping="NoWrap"
-                     AcceptsReturn="True"
+        <StackPanel>
+            <TextBlock Text="Video URL:"
+                       HorizontalAlignment="Left"
+                       FontSize="16"/>
+            <TextBox x:Name="URLTextBox"
                      HorizontalAlignment="Stretch"
-                     VerticalAlignment="Stretch"
-                     BorderThickness="1"
+                     VerticalAlignment="Top"
                      FontSize="16"/>
-        </ScrollViewer>
 
+            <TextBlock Text="Choose MP3 bitrate:"
+                       HorizontalAlignment="Left"
+                       FontSize="16"/>
+            <ListBox x:Name="BitratesListBox"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Top"/>
+
+            <TextBlock Text="Feedback:"
+                       HorizontalAlignment="Left"
+                       FontSize="16"/>
+            <ScrollViewer x:Name="ScrollViewer"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Top"
+                          
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                <TextBox x:Name="FeedbackTextBox"
+                         Background="Black"
+                         Foreground="Green"
+                         BorderBrush="DarkSlateGray"
+                         TextWrapping="NoWrap"
+                         AcceptsReturn="True"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         BorderThickness="1"
+                         FontSize="16"/>
+            </ScrollViewer>
+        </StackPanel>
+        
         <Button x:Name="DownloadButton"
-                Content="Download"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Visibility="Collapsed"
-                Click="DownloadButton_Click"/>
+                    Content="Download"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Visibility="Collapsed"
+                    Click="DownloadButton_Click"/>
 
         <Button x:Name="ConvertButton"
                 Content="Convert"
