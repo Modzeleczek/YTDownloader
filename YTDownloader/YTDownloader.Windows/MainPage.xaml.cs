@@ -46,8 +46,7 @@ namespace YTDownloader
             catch (Exception ex) when (
             ex is DownloaderAPIException ||
             ex is ArgumentException ||
-            ex is UnknownNameException ||
-            ex is IOException)
+            ex is FormatException)
             {
                 FeedbackTextBox.Text += ex.ToString();
                 DownloadButton.Visibility = Visibility.Collapsed;
@@ -56,8 +55,19 @@ namespace YTDownloader
 
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            await (BitratesListBox.SelectedItem as MP3).DownloadAsync(KnownFolders.MusicLibrary);
-            FeedbackTextBox.Text += "MP3 downloaded.";
+            try
+            {
+                await (BitratesListBox.SelectedItem as MP3).DownloadAsync(KnownFolders.MusicLibrary);
+                FeedbackTextBox.Text += "MP3 downloaded.";
+            }
+            catch (Exception ex) when (
+            ex is ArgumentException ||
+            ex is UnknownNameException ||
+            ex is IOException ||
+            ex is FileNotFoundException)
+            {
+                FeedbackTextBox.Text += ex.ToString();
+            }
         }
     }
 }
