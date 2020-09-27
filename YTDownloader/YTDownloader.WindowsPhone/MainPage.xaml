@@ -16,16 +16,16 @@
                  FontSize="16"/>
 
         <ListBox x:Name="BitratesListBox"
-                 Margin="0,30,0,0"
+                 Margin="0,48,0,0"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Top"
                  Height="200"/>
 
         <ScrollViewer x:Name="ScrollViewer"
-                      Margin="0,200,0,0"
+                      Margin="0,272,0,0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
-                      Height="350"
+                      Height="300"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Disabled">
             <TextBox x:Name="FeedbackTextBox"
